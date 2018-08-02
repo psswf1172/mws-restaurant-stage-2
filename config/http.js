@@ -22,6 +22,13 @@ module.exports.http = {
   ****************************************************************************/
 
   middleware: {
+    requireHttps: function(req, res, next) {
+      if (!req.secure) {
+        return res.redirect('https://' + req.get('host') + req.url);
+      }
+
+      return next();
+    },
 
   /***************************************************************************
   *                                                                          *
@@ -41,6 +48,7 @@ module.exports.http = {
     //   'methodOverride',
     //   'poweredBy',
     //   '$custom',
+    //   'requireHttps',
     //   'router',
     //   'www',
     //   'favicon',
